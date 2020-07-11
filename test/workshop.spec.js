@@ -1,49 +1,17 @@
 import { expect } from 'chai'; // ES6
-//var expect = require('chai').expect //ES5
+import fetch from 'node-fetch';
 
-before('Root Before', () => {
-  // runs once before all the describes
-  console.log('Root Before...');
-});
-
-describe('Login', () => {
-  describe('User with valid login', () => {
-    before(function () {
-      // runs once before the first test in this block
-      console.log('Before');
-    });
-
-    after(function () {
-      // runs once after the last test in this block
-      console.log('After');
-    });
-
-    beforeEach(function () {
-      // runs before each test in this block
-      console.log('Before Each');
-    });
-
-    afterEach(function () {
-      // runs after each
-      console.log('After Each');
-    });
-
-    it('Should be able to see the detail screen', function () {
-      expect(1).to.be.equal(2);
-    });
-
-    it('Should be able to search from detail screen', function () {});
-  });
-
-  describe('User with invalid login', () => {
-    it('Should not be able to see the detail screen', function () {});
-
-    it('Should not be able to search from detail screen', function () {});
-  });
-});
-
-describe('Logout', () => {
-  describe('User with valid login', () => {
-    it('Should be able logout for application', function () {});
+describe('Movie Details', () => {
+  it('Should be able to get movie results', async () => {
+    const series = await fetch(
+      'http://www.omdbapi.com/?t=Game&Episode=1&apikey=c9079b0f&type=series'
+    );
+    const movie = await fetch(
+      'http://www.omdbapi.com/?t=Game&Episode=1&apikey=c9079b0f&type=movie'
+    );
+    const finalSeries = await series.json();
+    expect(series.ok).to.be.true;
+    expect(movie.ok).to.be.true;
+    expect(finalSeries.Title).to.be.equal('Game of Thrones');
   });
 });
